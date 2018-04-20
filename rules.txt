@@ -1,0 +1,29 @@
+async function abc(...)
+  return 20
+end
+-------
+abc = coroutine.wrap(function(...)
+  return 20
+end)
+
+================
+
+function *abc(...)
+  yield 1
+  yield 2
+  yield 3
+  return 4
+end
+-------
+local __yield = coroutine.yield
+local __wrap = coroutine.wrap
+
+function abc()
+  return __wrap(function(...)
+    __yield(1)
+    __yield(2)
+    __yield(3)
+    return 4
+  end)
+end
+================
